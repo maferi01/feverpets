@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 export class ListpetsComponent implements OnInit , OnDestroy{
   
   listPets: IPet[];
-  subs: Subscription[];
+  subs: Subscription[]=[];
   constructor(private readonly servPets:PetsDataService ) { }
 
   ngOnInit() {

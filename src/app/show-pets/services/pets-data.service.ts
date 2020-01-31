@@ -11,7 +11,7 @@ export class PetsDataService {
   urlDetailPet:string;
 
   constructor(private http:HttpClient) {
-    this.urlListpets='https://my-json-server.typicode.com/Feverup/fever_pets_data/pets';
+    this.urlListpets='https://my-json-server.typicode.com/Feverup/fever_pets_data/pets?_page=1';
     this.urlDetailPet='https://my-json-server.typicode.com/Feverup/fever_pets_data/pets';
    }
 
