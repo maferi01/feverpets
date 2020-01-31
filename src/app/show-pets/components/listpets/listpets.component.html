@@ -1,1 +1,18 @@
-<p>listpets works!</p>
+
+<div class="listPets">
+    <div class="listPets__row listPets--header">
+            <div class="listPets__row__cell">Name</div>
+            <div class="listPets__row__cell">Kind</div>
+            <div class="listPets__row__cell">Length</div>
+            <div class="listPets__row__cell">Weight</div>
+            <div class="listPets__row__cell">Photo</div>
+    </div>
+
+    <div *ngFor="let pet of listPets" class="listPets__row">
+        <div class="listPets__row__cell">{{pet.name}}</div>
+        <div class="listPets__row__cell">{{pet.kind}}</div>
+        <div class="listPets__row__cell">{{pet.length}}</div>
+        <div class="listPets__row__cell">{{pet.weight}}</div>
+        <div class="listPets__row__cell"><img src="{{pet.photo_url}}" class="listPets__row__cell__image" > </div>
+    </div>
+</div>
