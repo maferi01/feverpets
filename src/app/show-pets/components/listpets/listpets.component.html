@@ -15,4 +15,11 @@
         <div class="listPets__row__cell">{{pet.weight}}</div>
         <div class="listPets__row__cell"><img src="{{pet.photo_url}}" class="listPets__row__cell__image" > </div>
     </div>
+
+    <div class="listPets__pagination">
+        <div class="listPets__pagination__button " [class.listPets__pagination__button--disable]="!isEnableAction('first')" (click)="first()">First</div>
+        <div class="listPets__pagination__button" [class.listPets__pagination__button--disable]="!isEnableAction('prev')" (click)="prev()">Prev</div>
+        <div class="listPets__pagination__button" [class.listPets__pagination__button--disable]="!isEnableAction('next')" (click)="next()">Next</div>
+        <div class="listPets__pagination__button" [class.listPets__pagination__button--disable]="!isEnableAction('last')" (click)="last()">Last</div>
+    </div>
 </div>
