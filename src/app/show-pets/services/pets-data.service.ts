@@ -2,13 +2,18 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {tap, map} from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { IPet, IListPet } from './models-pet';
+import { IPet, IListPet, HeadersPet } from './models-pet';
 
 @Injectable()
 export class PetsDataService {
 
   urlListpets:string;
   urlDetailPet:string;
+
+  //state sort 
+  currentSort:HeadersPet;
+  currentSortOrder:'asc'|'desc';
+
 
   constructor(private http:HttpClient) {
     this.urlListpets='http://my-json-server.typicode.com/Feverup/fever_pets_data/pets?_page=1';
@@ -54,6 +59,11 @@ export class PetsDataService {
       map(d=>d),
       tap(d=>console.log('request pet detail',d))
     );
+  }
+
+  saveOrder(currentSort:HeadersPet,order:'asc'|'desc'){
+    this.currentSortOrder=order;
+    this.currentSort=currentSort;
   }
 
 }

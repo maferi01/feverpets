@@ -28,7 +28,7 @@ export class ListpetsComponent implements OnInit , OnDestroy{
   }
 
   ngOnInit() {
-    this.loadData();
+    this.loadData(undefined,true);
   }
 
   first(){
@@ -47,7 +47,7 @@ export class ListpetsComponent implements OnInit , OnDestroy{
     this.loadData(this.urlPrev);
   }
 
-  loadData(urlPage?:string){
+  loadData(urlPage?:string,firstLoad=false){
     const subs= this.servPets.getPetList(urlPage).subscribe(data=>{
       this.listPets=data.list;
       this.urlFirst=data.urlFirst;
@@ -55,6 +55,11 @@ export class ListpetsComponent implements OnInit , OnDestroy{
       this.urlPrev=data.urlPrev;
       this.urlNext= data.urlNext;
       this.urlCurrent= data.urlCurrent;
+      //recover sort order
+      if(firstLoad && this.servPets.currentSort){
+        this.currentSort=this.servPets.currentSort;
+        this.currentSortOrder=this.servPets.currentSortOrder;
+      }
     });
     this.subs.push(subs);
   }
@@ -100,6 +105,7 @@ export class ListpetsComponent implements OnInit , OnDestroy{
 
 
   ngOnDestroy(): void {
+    this.servPets.saveOrder(this.currentSort,this.currentSortOrder);
     this.subs.forEach(s=>s.unsubscribe());
   }
 }
