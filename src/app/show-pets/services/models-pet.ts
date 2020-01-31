@@ -23,6 +23,7 @@ export enum HeadersPet{
   NAME='name',
   KIND='kind',
   LENGTH='length',
-  WEIGHT='weight'
+  WEIGHT='weight',
+  HEIGHT='height'
 
 }

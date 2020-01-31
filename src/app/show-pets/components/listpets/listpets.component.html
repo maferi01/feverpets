@@ -5,6 +5,7 @@
             <div class="listPets__row__cell" (click)="sort(Headers.KIND)">Kind</div>
             <div class="listPets__row__cell" (click)="sort(Headers.LENGTH)">Length</div>
             <div class="listPets__row__cell" (click)="sort(Headers.WEIGHT)">Weight</div>
+            <div class="listPets__row__cell" (click)="sort(Headers.HEIGHT)">Height</div>
             <div class="listPets__row__cell">Photo</div>
     </div>
 
@@ -13,6 +14,7 @@
         <div class="listPets__row__cell">{{pet.kind}}</div>
         <div class="listPets__row__cell">{{pet.length}}</div>
         <div class="listPets__row__cell">{{pet.weight}}</div>
+        <div class="listPets__row__cell">{{pet.height}}</div>
         <div class="listPets__row__cell"><img src="{{pet.photo_url}}" class="listPets__row__cell__image" > </div>
     </div>
 
