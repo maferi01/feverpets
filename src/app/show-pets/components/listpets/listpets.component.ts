@@ -17,7 +17,7 @@ export class ListpetsComponent implements OnInit , OnDestroy{
 
   ngOnInit() {
    const subs= this.servPets.getPetList().subscribe(data=>{
-      this.listPets=data;
+      this.listPets=data.list;
     });
     this.subs.push(subs);
   }
@@ -35,7 +35,7 @@ export class ListpetsComponent implements OnInit , OnDestroy{
   }
 
   prev(){
-    
+
   }
 
   ngOnDestroy(): void {

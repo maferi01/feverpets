@@ -8,3 +8,11 @@ export interface IPet {
     photo_url: string;
     description: string;
   }
+
+export interface IListPet{
+  urlFirst:string;
+  urlLast:string;
+  urlPrev:string;
+  urlNext:string;
+  list:IPet[];
+}
