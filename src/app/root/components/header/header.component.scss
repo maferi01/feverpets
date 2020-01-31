@@ -1,4 +1,22 @@
 
+
+.headercontainer{
+  background-color: black;
+  min-height: 120px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  &__logo{
+    flex: 0 0 15%; 
+
+  }
+  &__title{
+    flex: 1 0 0;
+    font-size: 80px;
+    color: white;
+  }
+}
+
 a{
   margin-right: 20px;
 }
