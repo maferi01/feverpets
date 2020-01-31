@@ -1,0 +1,16 @@
+<ng-template #main>
+  <router-outlet name="main"></router-outlet>
+</ng-template>
+<ng-template #asideright>
+  <router-outlet name="asideright" (activate)="activAsideRight($event)" (deactivate)="deactivAsideRight($event)" #refAside="outlet"></router-outlet>
+</ng-template>
+<ng-template #asideleft>
+  <router-outlet name="asideleft" (activate)="activAsideLeft($event)"></router-outlet>
+</ng-template>
+
+<!-- <app-layout-main
+  [mainTemp]="main"
+  [asideRightTemp]="asideright"
+  [aside.right.show]="asideRightShow"
+  [asideLeftTemp]="asideleft"
+  [aside.left.show]="asideLeftShow"></app-layout-main>  -->
