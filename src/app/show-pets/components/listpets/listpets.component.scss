@@ -9,8 +9,8 @@
         flex-direction: row;
         flex-wrap: nowrap;
         line-height: 35px;
+
         //justify-content: space-between;        
-        
         &__cell{
             display: flex;
             flex-direction: row;
@@ -20,6 +20,11 @@
                 width: 30px;
                 height: 30px;
             }
+        }
+       
+        &:hover{
+            background-color: linen;
+            cursor: pointer;
         }
     }
 
