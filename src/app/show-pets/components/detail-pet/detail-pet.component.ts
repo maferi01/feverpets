@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-detail-pet',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailPetComponent implements OnInit {
 
-  constructor() { }
+  constructor(public activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+     this.activatedRoute.paramMap
+    .pipe(map(() => window.history.state))
+    .subscribe(dat=>console.log('pet data',dat));
+  
   }
 
 }

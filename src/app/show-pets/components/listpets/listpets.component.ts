@@ -3,6 +3,7 @@ import { PetsDataService } from '../../services/pets-data.service';
 import { ThrowStmt } from '@angular/compiler';
 import { IPet, HeadersPet } from '../../services/models-pet';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listpets',
@@ -22,7 +23,7 @@ export class ListpetsComponent implements OnInit , OnDestroy{
   currentSort:HeadersPet;
   currentSortOrder:'asc'|'desc';
 
-  constructor(private readonly servPets:PetsDataService ) { 
+  constructor(private readonly servPets:PetsDataService, private readonly router:Router ) { 
     this.currentSortOrder='asc';
     //this.currentSort=HeadersPet.NAME;
   }
@@ -101,6 +102,10 @@ export class ListpetsComponent implements OnInit , OnDestroy{
     }
     return classes; 
     
+  }
+
+  clickRow(pet:IPet){
+    this.router.navigate(['pets/detail'],{state:pet});
   }
 
 
