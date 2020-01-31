@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { IPet } from '../../services/models-pet';
 
 @Component({
   selector: 'app-detail-pet',
@@ -8,13 +9,17 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./detail-pet.component.scss']
 })
 export class DetailPetComponent implements OnInit {
+  pet:IPet;
 
   constructor(public activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
      this.activatedRoute.paramMap
     .pipe(map(() => window.history.state))
-    .subscribe(dat=>console.log('pet data',dat));
+    .subscribe(dat=>{
+      console.log('pet data',dat);
+      this.pet=dat;
+    });
   
   }
 
