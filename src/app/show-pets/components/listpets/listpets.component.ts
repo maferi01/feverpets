@@ -22,6 +22,21 @@ export class ListpetsComponent implements OnInit , OnDestroy{
     this.subs.push(subs);
   }
 
+  first(){
+
+  }
+
+  last(){
+
+  }
+
+  next(){
+
+  }
+
+  prev(){
+    
+  }
 
   ngOnDestroy(): void {
     this.subs.forEach(s=>s.unsubscribe());

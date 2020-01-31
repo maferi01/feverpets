@@ -14,11 +14,29 @@
         &__cell{
             display: flex;
             flex-direction: row;
-            flex: 0 0 10%;
+            flex: 0 0 20%;
             
             &__image{
                 width: 30px;
                 height: 30px;
+            }
+        }
+    }
+
+    &__pagination{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        
+        &__button {
+            border: 1px solid red;
+            cursor: pointer;
+            padding: 10px 35px;
+            margin-right: 30px;
+                        
+            &--disable{
+              background: grey;
+              pointer-events: none;  
             }
         }
     }
