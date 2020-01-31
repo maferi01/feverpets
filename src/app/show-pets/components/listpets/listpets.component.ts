@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PetsDataService } from '../../services/pets-data.service';
 import { ThrowStmt } from '@angular/compiler';
-import { IPet } from '../../services/models-pet';
+import { IPet, HeadersPet } from '../../services/models-pet';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -18,8 +18,14 @@ export class ListpetsComponent implements OnInit , OnDestroy{
   urlPrev: string;
   urlNext: string;
   urlCurrent: string;
+  Headers=HeadersPet;
+  currentSort:HeadersPet;
+  currentSortOrder:'asc'|'desc';
 
-  constructor(private readonly servPets:PetsDataService ) { }
+  constructor(private readonly servPets:PetsDataService ) { 
+    this.currentSortOrder='asc';
+    //this.currentSort=HeadersPet.NAME;
+  }
 
   ngOnInit() {
     this.loadData();
@@ -67,6 +73,15 @@ export class ListpetsComponent implements OnInit , OnDestroy{
       case 'next':{
         return !!(this.urlNext);
       }
+    }
+  }
+
+  sort(sort:HeadersPet){
+    if(this.currentSort===sort){
+      this.currentSortOrder=this.currentSortOrder==='asc'?'desc':'asc';
+    }else{
+      this.currentSort=sort;
+      this.currentSortOrder='asc';
     }
   }
 

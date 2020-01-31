@@ -17,3 +17,12 @@ export interface IListPet{
   urlCurrent:string;
   list:IPet[];
 }
+
+
+export enum HeadersPet{
+  NAME='name',
+  KIND='kind',
+  LENGTH='length',
+  WEIGHT='weight'
+
+}
