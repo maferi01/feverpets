@@ -9,17 +9,27 @@
         flex-direction: row;
         flex-wrap: nowrap;
         line-height: 35px;
+
         //justify-content: space-between;        
-        
         &__cell{
             display: flex;
             flex-direction: row;
-            flex: 0 0 20%;
+            flex: 0 0 17%;
             
             &__image{
                 width: 30px;
                 height: 30px;
             }
+
+            .fa{
+                font-size:24px;
+                padding-left: 10px;
+            }
+        }
+       
+        &:hover{
+            background-color: linen;
+            cursor: pointer;
         }
     }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PetsDataService } from '../../services/pets-data.service';
 import { ThrowStmt } from '@angular/compiler';
-import { IPet } from '../../services/models-pet';
+import { IPet, HeadersPet } from '../../services/models-pet';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -18,11 +18,17 @@ export class ListpetsComponent implements OnInit , OnDestroy{
   urlPrev: string;
   urlNext: string;
   urlCurrent: string;
+  Headers=HeadersPet;
+  currentSort:HeadersPet;
+  currentSortOrder:'asc'|'desc';
 
-  constructor(private readonly servPets:PetsDataService ) { }
+  constructor(private readonly servPets:PetsDataService ) { 
+    this.currentSortOrder='asc';
+    //this.currentSort=HeadersPet.NAME;
+  }
 
   ngOnInit() {
-    this.loadData();
+    this.loadData(undefined,true);
   }
 
   first(){
@@ -41,7 +47,7 @@ export class ListpetsComponent implements OnInit , OnDestroy{
     this.loadData(this.urlPrev);
   }
 
-  loadData(urlPage?:string){
+  loadData(urlPage?:string,firstLoad=false){
     const subs= this.servPets.getPetList(urlPage).subscribe(data=>{
       this.listPets=data.list;
       this.urlFirst=data.urlFirst;
@@ -49,6 +55,11 @@ export class ListpetsComponent implements OnInit , OnDestroy{
       this.urlPrev=data.urlPrev;
       this.urlNext= data.urlNext;
       this.urlCurrent= data.urlCurrent;
+      //recover sort order
+      if(firstLoad && this.servPets.currentSort){
+        this.currentSort=this.servPets.currentSort;
+        this.currentSortOrder=this.servPets.currentSortOrder;
+      }
     });
     this.subs.push(subs);
   }
@@ -70,7 +81,31 @@ export class ListpetsComponent implements OnInit , OnDestroy{
     }
   }
 
+  sort(sort:HeadersPet){
+    if(this.currentSort===sort){
+      this.currentSortOrder=this.currentSortOrder==='asc'?'desc':'asc';
+    }else{
+      this.currentSort=sort;
+      this.currentSortOrder='asc';
+    }
+  }
+
+  get classesSort(){
+    const classes={};
+    if(this.currentSortOrder==='asc'){
+      classes['fa-angle-down']=true;
+      classes['fa-angle-up']=false;
+    }else{
+      classes['fa-angle-up']=true;
+      classes['fa-angle-down']=false;
+    }
+    return classes; 
+    
+  }
+
+
   ngOnDestroy(): void {
+    this.servPets.saveOrder(this.currentSort,this.currentSortOrder);
     this.subs.forEach(s=>s.unsubscribe());
   }
 }
