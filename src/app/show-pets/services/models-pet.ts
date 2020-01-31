@@ -14,5 +14,6 @@ export interface IListPet{
   urlLast:string;
   urlPrev:string;
   urlNext:string;
+  urlCurrent:string;
   list:IPet[];
 }

@@ -11,12 +11,12 @@ export class PetsDataService {
   urlDetailPet:string;
 
   constructor(private http:HttpClient) {
-    this.urlListpets='https://my-json-server.typicode.com/Feverup/fever_pets_data/pets?_page=1';
-    this.urlDetailPet='https://my-json-server.typicode.com/Feverup/fever_pets_data/pets';
+    this.urlListpets='http://my-json-server.typicode.com/Feverup/fever_pets_data/pets?_page=1';
+    this.urlDetailPet='http://my-json-server.typicode.com/Feverup/fever_pets_data/pets';
    }
 
-  getPetList():Observable<IListPet>{
-    return this.http.get<IListPet>(this.urlListpets, { observe: 'response' }).pipe(
+  getPetList(urlPage=this.urlListpets):Observable<IListPet>{
+    return this.http.get<IListPet>(urlPage, { observe: 'response' }).pipe(
       tap(d=>console.log('request list pets',d)),
       // convert Response to IListPet
       map(d=>{
@@ -26,6 +26,7 @@ export class PetsDataService {
          urlLast: this.getUrlLink(link,'last'),
          urlNext: this.getUrlLink(link,'next'),
          urlPrev: this.getUrlLink(link,'prev'), 
+         urlCurrent:urlPage,
          list: d.body as any
         } as IListPet;
       }),
