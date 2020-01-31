@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RootModule } from './root/root.module';
 import { ServicesModule } from './services/services.module';
 import { AppComponent } from './root/app.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { AppComponent } from './root/app.component';
   imports: [
     BrowserModule,
     RootModule,
+    HttpClientModule,
     ServicesModule
   ],
   providers: [],
