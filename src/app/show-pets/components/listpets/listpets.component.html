@@ -1,11 +1,11 @@
 
 <div class="listPets">
     <div class="listPets__row listPets--header">
-            <div class="listPets__row__cell" (click)="sort(Headers.NAME)">Name</div>
-            <div class="listPets__row__cell" (click)="sort(Headers.KIND)">Kind</div>
-            <div class="listPets__row__cell" (click)="sort(Headers.LENGTH)">Length</div>
-            <div class="listPets__row__cell" (click)="sort(Headers.WEIGHT)">Weight</div>
-            <div class="listPets__row__cell" (click)="sort(Headers.HEIGHT)">Height</div>
+            <div class="listPets__row__cell" (click)="sort(Headers.NAME)">Name <span *ngIf="Headers.NAME===currentSort" class="fa" [ngClass]="classesSort" ></span></div>
+            <div class="listPets__row__cell" (click)="sort(Headers.KIND)">Kind <span *ngIf="Headers.KIND===currentSort" class="fa" [ngClass]="classesSort" ></span></div>
+            <div class="listPets__row__cell" (click)="sort(Headers.LENGTH)">Length <span *ngIf="Headers.LENGTH===currentSort" class="fa" [ngClass]="classesSort" ></span></div> 
+            <div class="listPets__row__cell" (click)="sort(Headers.WEIGHT)">Weight <span *ngIf="Headers.WEIGHT===currentSort" class="fa" [ngClass]="classesSort" ></span></div>
+            <div class="listPets__row__cell" (click)="sort(Headers.HEIGHT)">Height <span *ngIf="Headers.HEIGHT===currentSort" class="fa" [ngClass]="classesSort" ></span></div>
             <div class="listPets__row__cell">Photo</div>
     </div>
 
@@ -25,3 +25,5 @@
         <div class="listPets__pagination__button" [class.listPets__pagination__button--disable]="!isEnableAction('last')" (click)="last()">Last</div>
     </div>
 </div>
+
+

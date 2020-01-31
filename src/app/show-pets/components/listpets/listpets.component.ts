@@ -85,6 +85,20 @@ export class ListpetsComponent implements OnInit , OnDestroy{
     }
   }
 
+  get classesSort(){
+    const classes={};
+    if(this.currentSortOrder==='asc'){
+      classes['fa-angle-down']=true;
+      classes['fa-angle-up']=false;
+    }else{
+      classes['fa-angle-up']=true;
+      classes['fa-angle-down']=false;
+    }
+    return classes; 
+    
+  }
+
+
   ngOnDestroy(): void {
     this.subs.forEach(s=>s.unsubscribe());
   }
