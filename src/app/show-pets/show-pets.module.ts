@@ -5,8 +5,9 @@ import { ShowPetsRoutingModule } from './show-pets-routing.module';
 import { ListpetsComponent } from './components/listpets/listpets.component';
 import { DetailPetComponent } from './components/detail-pet/detail-pet.component';
 import { PetsDataService } from './services/pets-data.service';
-
-
+/**
+ * Pets module contains all the pages and features of this functional logic.
+ */
 
 @NgModule({
   declarations: [ListpetsComponent, DetailPetComponent],
