@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { orderBy,sortBy } from 'lodash';
 /**
- * Pipe to get one list ordered by field-type, it uses lodash api
+ * Pipe to get one list ordered by field-type, it could use lodash api for complex
  */
 @Pipe({
   name: 'orderBy'
@@ -10,8 +9,25 @@ export class OrderByPipe implements PipeTransform {
 
   transform(value: any[], order = '', column: string = ''): any[] {
     if (!value || order === '' || !order) { return value; } // no array
-    if (!column || column === '') { return sortBy(value); } // sort 1d array
     if (value.length <= 1) { return value; } // array with only one item
-    return orderBy(value, [column], [order]);
+    return this.orderBy(value, column, order);
   }
+  
+  /**
+   * Order function based on sort array .
+   * @param list 
+   * @param column 
+   * @param order 
+   */
+  orderBy(list: any[], column: string, order: string): any[] {
+   
+  const ascFn=(a,b)=>a[column] > b[column]?1:-1;
+  const descFn=(a,b)=>a[column] < b[column]?1:-1;
+     
+  return list.sort(order==='asc'?ascFn:descFn)
+  }
+  
+  
+  
+  
 }
