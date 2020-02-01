@@ -3,16 +3,17 @@ import { PetsDataService } from '../../services/pets-data.service';
 import { ThrowStmt } from '@angular/compiler';
 import { IPet, HeadersPet } from '../../services/models-pet';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { BaseComponent } from 'src/app/shared/components/base-component';
 
 @Component({
   selector: 'app-listpets',
   templateUrl: './listpets.component.html',
   styleUrls: ['./listpets.component.scss']
 })
-export class ListpetsComponent implements OnInit , OnDestroy{
+export class ListpetsComponent  extends BaseComponent implements OnInit , OnDestroy{
   
   listPets: IPet[];
-  subs: Subscription[]=[];
   urlFirst: string;
   urlLast: string;
   urlPrev: string;
@@ -22,9 +23,9 @@ export class ListpetsComponent implements OnInit , OnDestroy{
   currentSort:HeadersPet;
   currentSortOrder:'asc'|'desc';
 
-  constructor(private readonly servPets:PetsDataService ) { 
+  constructor(private readonly servPets:PetsDataService, private readonly router:Router ) { 
+    super();
     this.currentSortOrder='asc';
-    //this.currentSort=HeadersPet.NAME;
   }
 
   ngOnInit() {
@@ -103,9 +104,13 @@ export class ListpetsComponent implements OnInit , OnDestroy{
     
   }
 
+  clickRow(pet:IPet){
+    this.router.navigate(['pets/detail'],{state:pet});
+  }
+
 
   ngOnDestroy(): void {
     this.servPets.saveOrder(this.currentSort,this.currentSortOrder);
-    this.subs.forEach(s=>s.unsubscribe());
+    super.ngOnDestroy(); 
   }
 }

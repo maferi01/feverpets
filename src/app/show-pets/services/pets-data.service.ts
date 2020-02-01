@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {tap, map} from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { IPet, IListPet, HeadersPet } from './models-pet';
+import { IPet, IListPet, HeadersPet, HealthLevel, IPetDetail } from './models-pet';
 
 @Injectable()
 export class PetsDataService {
@@ -54,12 +54,29 @@ export class PetsDataService {
      return url;
   }
 
-  getPetDetail():Observable<IPet>{
-    return this.http.get<IPet>(this.urlListpets).pipe(
-      map(d=>d),
-      tap(d=>console.log('request pet detail',d))
+  getPetDetail(key:string):Observable<IPetDetail>{
+    return this.http.get<IPet>(this.urlDetailPet+'/'+key).pipe(
+      map(d=>{
+       // get healthy level and add to model
+        return {
+        ...d,
+        healthy: this.getHealthyLevel(d)} as IPetDetail;
+      }),
+      tap(d=>console.log('pet detail',d))
     );
   }
+
+  getHealthyLevel(pet:IPet):HealthLevel{
+   const point=pet.weight / (pet.height * pet.length);
+    if(point<2 || point>5){
+      return HealthLevel.UNHEALTHY;
+    }else if(point>=3 && point<=5){
+      return HealthLevel.HEALTHY;
+    }else if(point>=2 && point<=3){
+      return HealthLevel.VERY_HEALTHY;
+    }  
+  }
+
 
   saveOrder(currentSort:HeadersPet,order:'asc'|'desc'){
     this.currentSortOrder=order;

@@ -1,1 +1,12 @@
-<p>detail-pet works!</p>
+<div class="detail" *ngIf="pet">
+    <a [routerLink]="['/pets']" ><i class="fa fa-angle-double-left"></i> Go to list...</a>
+    <div class="detail__data">
+        <app-list-key-values [keyValues]="keyValues"></app-list-key-values>
+    </div>
+   
+    <div class="detail__img">
+    <img src="{{pet.photo_url}}">
+    </div>
+
+  
+</div>

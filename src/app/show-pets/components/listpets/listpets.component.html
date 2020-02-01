@@ -9,7 +9,7 @@
             <div class="listPets__row__cell">Photo</div>
     </div>
 
-    <div *ngFor="let pet of listPets | orderBy:currentSortOrder:currentSort" class="listPets__row">
+    <div *ngFor="let pet of listPets | orderBy:currentSortOrder:currentSort" (click)="clickRow(pet)" class="listPets__row">
         <div class="listPets__row__cell">{{pet.name}}</div>
         <div class="listPets__row__cell">{{pet.kind}}</div>
         <div class="listPets__row__cell">{{pet.length}}</div>
