@@ -54,6 +54,7 @@ export class PetsDataService {
    */
   getUrlLink(link: string, key: string): string {
     let url;
+    if(!link){return null};
      link.split(',').forEach(cad=> {
       if(cad.split(';')[1].includes(`rel="${key}"`)){
        url=cad.split(';')[0].replace('<','').replace('>','').trim();;

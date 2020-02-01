@@ -52,6 +52,14 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
   prev(){
     this.loadData(this.urlPrev);
   }
+
+  getAllPage(){
+    this.hasAll()?this.loadData():this.loadData(this.servPets.urlPet);
+  }
+
+  hasAll():boolean{
+    return !this.urlFirst; 
+  }
  /*********************** */
 
  /**
@@ -81,6 +89,7 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
    * @param action 
    */
   isEnableAction(action:'first'|'last'|'next'|'prev'):boolean{
+    if(this.hasAll()){return false}
     switch(action){
       case 'first':{
         return !(this.urlFirst===this.urlCurrent);

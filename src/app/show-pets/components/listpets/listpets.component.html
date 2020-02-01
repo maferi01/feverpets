@@ -19,6 +19,7 @@
     </div>
 
     <div class="listPets__pagination">
+        <div class="listPets__pagination__button " (click)="getAllPage()">{{hasAll()?'Get By Page':'Get All'}}</div>
         <div class="listPets__pagination__button " [class.listPets__pagination__button--disable]="!isEnableAction('first')" (click)="first()">First</div>
         <div class="listPets__pagination__button" [class.listPets__pagination__button--disable]="!isEnableAction('prev')" (click)="prev()">Prev</div>
         <div class="listPets__pagination__button" [class.listPets__pagination__button--disable]="!isEnableAction('next')" (click)="next()">Next</div>
