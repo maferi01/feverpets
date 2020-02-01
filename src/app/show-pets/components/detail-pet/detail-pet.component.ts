@@ -4,19 +4,22 @@ import { map, mergeMap } from 'rxjs/operators';
 import { IPet, IPetDetail } from '../../services/models-pet';
 import { IKeyValue } from 'src/app/shared/components/list-key-values/modellistkeys';
 import { PetsDataService } from '../../services/pets-data.service';
+import { BaseComponent } from 'src/app/shared/components/base-component';
 
 @Component({
   selector: 'app-detail-pet',
   templateUrl: './detail-pet.component.html',
   styleUrls: ['./detail-pet.component.scss']
 })
-export class DetailPetComponent implements OnInit {
+export class DetailPetComponent extends BaseComponent implements OnInit {
   pet:IPetDetail;
   keyValues:IKeyValue[];
-  constructor(public activatedRoute: ActivatedRoute,private readonly servPets:PetsDataService) { }
+  constructor(public activatedRoute: ActivatedRoute,private readonly servPets:PetsDataService) {
+    super();
+   }
 
   ngOnInit() {
-     this.activatedRoute.paramMap
+   const sub=  this.activatedRoute.paramMap
     .pipe(
     map(() => window.history.state),
     mergeMap((dat:IPet)=>this.servPets.getPetDetail(dat.id.toString()))
@@ -33,7 +36,7 @@ export class DetailPetComponent implements OnInit {
       
       this.keyValues.push({key:'Description',value:dat.description});
     });
-  
+    this.subs.push(sub);
   }
 
 }
