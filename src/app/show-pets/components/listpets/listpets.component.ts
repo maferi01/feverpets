@@ -5,7 +5,9 @@ import { IPet, HeadersPet } from '../../services/models-pet';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { BaseComponent } from 'src/app/shared/components/base-component';
-
+/**
+ * Component list for pets
+ */
 @Component({
   selector: 'app-listpets',
   templateUrl: './listpets.component.html',
@@ -32,6 +34,9 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
     this.loadData(undefined,true);
   }
 
+  /**
+   * Pagination actions
+   */
   first(){
     this.loadData(this.urlFirst);
   }
@@ -47,7 +52,13 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
   prev(){
     this.loadData(this.urlPrev);
   }
+ /*********************** */
 
+ /**
+  * Load data from this comp. it takes the urlpage and if its first one
+  * @param urlPage 
+  * @param firstLoad 
+  */
   loadData(urlPage?:string,firstLoad=false){
     const subs= this.servPets.getPetList(urlPage).subscribe(data=>{
       this.listPets=data.list;
@@ -65,6 +76,10 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
     this.subs.push(subs);
   }
 
+  /**
+   * Helpers to check enable status pagination
+   * @param action 
+   */
   isEnableAction(action:'first'|'last'|'next'|'prev'):boolean{
     switch(action){
       case 'first':{
@@ -82,6 +97,10 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
     }
   }
 
+  /**
+   * Call sort action ,and sets the bindings
+   * @param sort , type sort
+   */
   sort(sort:HeadersPet){
     if(this.currentSort===sort){
       this.currentSortOrder=this.currentSortOrder==='asc'?'desc':'asc';
@@ -91,6 +110,9 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
     }
   }
 
+  /**
+   * Classes for showing the icon sort
+   */
   get classesSort(){
     const classes={};
     if(this.currentSortOrder==='asc'){
@@ -104,11 +126,17 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
     
   }
 
+  /**
+   * Navigate to detail, pass the pet model
+   * @param pet 
+   */
   clickRow(pet:IPet){
     this.router.navigate(['pets/detail'],{state:pet});
   }
 
-
+ /**
+  * Destroy , saves the order state
+  */
   ngOnDestroy(): void {
     this.servPets.saveOrder(this.currentSort,this.currentSortOrder);
     super.ngOnDestroy(); 

@@ -1,6 +1,24 @@
 <div class="listkeyvalues">
   <div class="listkeyvalues__row" *ngFor="let keyValue of keyValues">
   <div class="listkeyvalues__row__key">{{keyValue.key}}:</div>
- <div class="listkeyvalues__row__value">{{keyValue.value}}</div>
+ <div class="listkeyvalues__row__value">
+   
+  <ng-container [ngSwitch]="keyValue.type">
+      <ng-template [ngSwitchCase]="ConversionVal.DATE">
+        {{keyValue.value | date}}
+      </ng-template>
+      <ng-template [ngSwitchCase]="ConversionVal.NUMBER">
+        {{keyValue.value | number}}
+      </ng-template>
+      <ng-template [ngSwitchCase]="ConversionVal.NUMBER_DEC">
+        {{keyValue.value | number:'0.2-2'}}
+      </ng-template>
+      <ng-template [ngSwitchCase]>
+        {{keyValue.value}}
+      </ng-template>
+  </ng-container>
+  
+  
+  </div>
 </div>
 </div>

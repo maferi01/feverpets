@@ -5,7 +5,9 @@ import { IPet, IPetDetail } from '../../services/models-pet';
 import { IKeyValue } from 'src/app/shared/components/list-key-values/modellistkeys';
 import { PetsDataService } from '../../services/pets-data.service';
 import { BaseComponent } from 'src/app/shared/components/base-component';
-
+/**
+ * Detail pet component
+ */
 @Component({
   selector: 'app-detail-pet',
   templateUrl: './detail-pet.component.html',
@@ -18,6 +20,11 @@ export class DetailPetComponent extends BaseComponent implements OnInit {
     super();
    }
 
+   /**
+    * Init loads the detail with the code pet,
+    * Which is got from router 
+    * Loads the list key-values
+    */
   ngOnInit() {
    const sub=  this.activatedRoute.paramMap
     .pipe(

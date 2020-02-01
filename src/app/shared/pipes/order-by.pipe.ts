@@ -1,6 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { orderBy,sortBy } from 'lodash';
-
+/**
+ * Pipe to get one list ordered by field-type, it uses lodash api
+ */
 @Pipe({
   name: 'orderBy'
 })

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+/**
+ * Header component , it has the title, logo .......
+ */
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',

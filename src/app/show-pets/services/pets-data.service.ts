@@ -4,11 +4,14 @@ import {tap, map} from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { IPet, IListPet, HeadersPet, HealthLevel, IPetDetail } from './models-pet';
 
+/**
+ * Service pets implements all the logic required. 
+ */
 @Injectable()
 export class PetsDataService {
-
+  //urls pet
   urlListpets:string;
-  urlDetailPet:string;
+  urlPet:string;
 
   //state sort 
   currentSort:HeadersPet;
@@ -16,10 +19,15 @@ export class PetsDataService {
 
 
   constructor(private http:HttpClient) {
-    this.urlListpets='http://my-json-server.typicode.com/Feverup/fever_pets_data/pets?_page=1';
-    this.urlDetailPet='http://my-json-server.typicode.com/Feverup/fever_pets_data/pets';
-   }
+    this.urlPet='http://my-json-server.typicode.com/Feverup/fever_pets_data/pets';
+    this.urlListpets=this.urlPet+'?_page=1';
+   
+  }
 
+  /**
+   * get list pets from serve, it supports pagination url
+   * @param urlPage 
+   */ 
   getPetList(urlPage=this.urlListpets):Observable<IListPet>{
     return this.http.get<IListPet>(urlPage, { observe: 'response' }).pipe(
       tap(d=>console.log('request list pets',d)),
@@ -54,8 +62,12 @@ export class PetsDataService {
      return url;
   }
 
+  /**
+   * Gets detail pet from server by code pet, add new proccess fields
+   * @param key 
+   */
   getPetDetail(key:string):Observable<IPetDetail>{
-    return this.http.get<IPet>(this.urlDetailPet+'/'+key).pipe(
+    return this.http.get<IPet>(this.urlPet+'/'+key).pipe(
       map(d=>{
        // get healthy level and add to model
         return {
@@ -66,6 +78,10 @@ export class PetsDataService {
     );
   }
 
+  /**
+   * Helper to get level healthy since rules bussiness
+   * @param pet 
+   */
   getHealthyLevel(pet:IPet):HealthLevel{
    const point=pet.weight / (pet.height * pet.length);
     if(point<2 || point>5){
@@ -77,7 +93,11 @@ export class PetsDataService {
     }  
   }
 
-
+ /**
+  * Saves the state order in this singleton
+  * @param currentSort 
+  * @param order 
+  */
   saveOrder(currentSort:HeadersPet,order:'asc'|'desc'){
     this.currentSortOrder=order;
     this.currentSort=currentSort;

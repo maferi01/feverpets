@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+/**
+ * This component manages the main layout of this app, header-body-footer
+ */
 @Component({
   selector: 'app-layout-router',
   templateUrl: './layout-router.component.html',

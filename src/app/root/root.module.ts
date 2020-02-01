@@ -6,7 +6,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutRouterComponent } from './components/layout-router/layout-router.component';
 import { HeaderComponent } from './components/header/header.component';
-
+/**
+ * Root module for this app, It lives always, and loads persistent modules and main component 
+ */
 @NgModule({
   declarations: [AppComponent, LayoutRouterComponent, HeaderComponent],
   imports: [
