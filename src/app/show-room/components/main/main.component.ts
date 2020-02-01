@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IKeyValue } from 'src/app/shared/components/list-key-values/modellistkeys';
 
 @Component({
   selector: 'app-main',
@@ -11,5 +12,13 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  
+  get keyValues():IKeyValue[]{
+    return [
+      {key:'keya',value:'value1'},
+      {key:'keyb',value:'valueb'},
+      {key:'keyc',value:'valuec'},
+      {key:'keyd',value:'valued'}
+    ]  
+  }
 }

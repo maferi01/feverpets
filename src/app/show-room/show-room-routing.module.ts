@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MainComponent } from './components/main/main.component';
 
 const routes: Routes = [
-  // {
-  //   path: 'paged',
-  //   component: LayoutRouterInsideComponent,
-  //   children: [
-  //     {path: '', component: MainComponent, outlet: 'main'},
-  //   ]
-  // }
+  {
+    path: 'keys',
+    component: MainComponent
+  }
 ];
 
 @NgModule({
