@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
-import { IPet } from '../../services/models-pet';
+import { IPet, IPetDetail } from '../../services/models-pet';
 import { IKeyValue } from 'src/app/shared/components/list-key-values/modellistkeys';
 import { PetsDataService } from '../../services/pets-data.service';
 
@@ -11,7 +11,7 @@ import { PetsDataService } from '../../services/pets-data.service';
   styleUrls: ['./detail-pet.component.scss']
 })
 export class DetailPetComponent implements OnInit {
-  pet:IPet;
+  pet:IPetDetail;
   keyValues:IKeyValue[];
   constructor(public activatedRoute: ActivatedRoute,private readonly servPets:PetsDataService) { }
 
@@ -20,7 +20,7 @@ export class DetailPetComponent implements OnInit {
     .pipe(
     map(() => window.history.state),
     mergeMap((dat:IPet)=>this.servPets.getPetDetail(dat.id.toString()))
-    ).subscribe((dat:IPet)=>{
+    ).subscribe((dat:IPetDetail)=>{
       console.log('pet data',dat);
       this.pet=dat;
       this.keyValues=[];
@@ -29,6 +29,7 @@ export class DetailPetComponent implements OnInit {
       this.keyValues.push({key:'Length',value:dat.length});
       this.keyValues.push({key:'Weight',value:dat.weight});
       this.keyValues.push({key:'Height',value:dat.height});
+      this.keyValues.push({key:'Healthy',value:dat.healthy});
       
       this.keyValues.push({key:'Description',value:dat.description});
     });
