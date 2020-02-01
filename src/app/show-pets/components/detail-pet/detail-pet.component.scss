@@ -1,12 +1,17 @@
 .detail{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    //justify-content: space-between;
     &__img{
-
+        
     }
 
     &__data{
         flex: 0 0 20%;
+        margin-bottom: 20px;
+    }
+
+    & > a{
+       min-height: 30px; 
     }
 }

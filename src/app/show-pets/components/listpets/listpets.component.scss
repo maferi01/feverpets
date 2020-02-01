@@ -8,7 +8,7 @@
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
-        line-height: 35px;
+        line-height: 75px;
 
         //justify-content: space-between;        
         &__cell{
@@ -17,13 +17,14 @@
             flex: 0 0 17%;
             
             &__image{
-                width: 30px;
-                height: 30px;
+                width: 70px;
+                height: 70px;
             }
 
             .fa{
                 font-size:24px;
                 padding-left: 10px;
+                padding-top: 20px;
             }
         }
        

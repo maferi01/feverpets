@@ -1,0 +1,19 @@
+.listkeyvalues {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  &__row {
+    display: flex;
+    flex-direction: row;
+   // justify-content: center;
+    &__key {
+        flex: 0 0 10%;
+        font-weight: bolder;
+    }
+    &__value {
+        flex: 1 0 0;
+       // font-weight: bolder;
+
+    }
+  }
+}

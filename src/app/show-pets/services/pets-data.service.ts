@@ -54,8 +54,8 @@ export class PetsDataService {
      return url;
   }
 
-  getPetDetail():Observable<IPet>{
-    return this.http.get<IPet>(this.urlListpets).pipe(
+  getPetDetail(key:string):Observable<IPet>{
+    return this.http.get<IPet>(this.urlDetailPet+'/'+key).pipe(
       map(d=>d),
       tap(d=>console.log('request pet detail',d))
     );

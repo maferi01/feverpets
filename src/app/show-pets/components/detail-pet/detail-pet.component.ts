@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { IPet } from '../../services/models-pet';
+import { IKeyValue } from 'src/app/shared/components/list-key-values/modellistkeys';
+import { PetsDataService } from '../../services/pets-data.service';
 
 @Component({
   selector: 'app-detail-pet',
@@ -10,15 +12,25 @@ import { IPet } from '../../services/models-pet';
 })
 export class DetailPetComponent implements OnInit {
   pet:IPet;
-
-  constructor(public activatedRoute: ActivatedRoute) { }
+  keyValues:IKeyValue[];
+  constructor(public activatedRoute: ActivatedRoute,private readonly servPets:PetsDataService) { }
 
   ngOnInit() {
      this.activatedRoute.paramMap
-    .pipe(map(() => window.history.state))
-    .subscribe(dat=>{
+    .pipe(
+    map(() => window.history.state),
+    mergeMap((dat:IPet)=>this.servPets.getPetDetail(dat.id.toString()))
+    ).subscribe((dat:IPet)=>{
       console.log('pet data',dat);
       this.pet=dat;
+      this.keyValues=[];
+      this.keyValues.push({key:'Name',value:dat.name});
+      this.keyValues.push({key:'Kind',value:dat.kind});
+      this.keyValues.push({key:'Length',value:dat.length});
+      this.keyValues.push({key:'Weight',value:dat.weight});
+      this.keyValues.push({key:'Height',value:dat.height});
+      
+      this.keyValues.push({key:'Description',value:dat.description});
     });
   
   }
