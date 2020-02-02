@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { IPet, HeadersPet } from '../../services/models-pet';
+import { BaseComponent } from 'src/app/shared/components/base-component';
 
 /**
  * Component for only list presentation and events list
@@ -11,7 +12,7 @@ import { IPet, HeadersPet } from '../../services/models-pet';
   styleUrls: ['./list-pets-presentation.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListPetsPresentationComponent implements OnInit {
+export class ListPetsPresentationComponent extends BaseComponent implements OnInit {
   
   //main data
   @Input()
@@ -54,7 +55,7 @@ export class ListPetsPresentationComponent implements OnInit {
   @Output()
   sortEvent= new EventEmitter<{column:HeadersPet,order:'asc'|'desc'}>();
 
-  constructor() { }
+  constructor() {super() }
 
   ngOnInit() {
   }
