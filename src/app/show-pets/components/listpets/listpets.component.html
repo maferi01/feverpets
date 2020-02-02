@@ -1,30 +1,24 @@
 
-<div class="listPets">
-    <div class="listPets__row listPets--header">
-            <div class="listPets__row__cell" (click)="sort(Headers.NAME)">Name <span *ngIf="Headers.NAME===currentSort" class="fa" [ngClass]="classesSort" ></span></div>
-            <div class="listPets__row__cell" (click)="sort(Headers.KIND)">Kind <span *ngIf="Headers.KIND===currentSort" class="fa" [ngClass]="classesSort" ></span></div>
-            <div class="listPets__row__cell" (click)="sort(Headers.LENGTH)">Length <span *ngIf="Headers.LENGTH===currentSort" class="fa" [ngClass]="classesSort" ></span></div> 
-            <div class="listPets__row__cell" (click)="sort(Headers.WEIGHT)">Weight <span *ngIf="Headers.WEIGHT===currentSort" class="fa" [ngClass]="classesSort" ></span></div>
-            <div class="listPets__row__cell" (click)="sort(Headers.HEIGHT)">Height <span *ngIf="Headers.HEIGHT===currentSort" class="fa" [ngClass]="classesSort" ></span></div>
-            <div class="listPets__row__cell">Photo</div>
-    </div>
+<app-list-pets-presentation
+*ngIf="listPets"
+[listPets]="listPets"
 
-    <div *ngFor="let pet of listPets | orderBy:currentSortOrder:currentSort" (click)="clickRow(pet)" class="listPets__row">
-        <div class="listPets__row__cell">{{pet.name}}</div>
-        <div class="listPets__row__cell">{{pet.kind}}</div>
-        <div class="listPets__row__cell">{{pet.length}}</div>
-        <div class="listPets__row__cell">{{pet.weight}}</div>
-        <div class="listPets__row__cell">{{pet.height}}</div>
-        <div class="listPets__row__cell"><img src="{{pet.photo_url}}" class="listPets__row__cell__image" > </div>
-    </div>
+[currentSort]="currentSort"
+[currentSortOrder]="currentSortOrder"
+(sortEvent)="sort($event)"
 
-    <div class="listPets__pagination">
-        <div class="listPets__pagination__button " (click)="getAllPage()">{{hasAll()?'Get By Page':'Get All'}}</div>
-        <div class="listPets__pagination__button " [class.listPets__pagination__button--disable]="!isEnableAction('first')" (click)="first()">First</div>
-        <div class="listPets__pagination__button" [class.listPets__pagination__button--disable]="!isEnableAction('prev')" (click)="prev()">Prev</div>
-        <div class="listPets__pagination__button" [class.listPets__pagination__button--disable]="!isEnableAction('next')" (click)="next()">Next</div>
-        <div class="listPets__pagination__button" [class.listPets__pagination__button--disable]="!isEnableAction('last')" (click)="last()">Last</div>
-    </div>
-</div>
+[enableFirst]="enableFirst"
+[enableLast]="enableLast"
+[enableNext]="enableNext"
+[enablePrev]="enablePrev"
+[hasAllPage]="hasAll()"
+(first)="first()"
+(next)="next()"
+(prev)="prev()"
+(last)="last()"
+(allPage)="getAllPage()"
 
+(row)="clickRow($event)"
+
+></app-list-pets-presentation>
 

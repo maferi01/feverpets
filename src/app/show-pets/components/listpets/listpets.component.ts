@@ -1,12 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PetsDataService } from '../../services/pets-data.service';
-import { ThrowStmt } from '@angular/compiler';
-import { IPet, HeadersPet } from '../../services/models-pet';
-import { Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BaseComponent } from 'src/app/shared/components/base-component';
+
+import { HeadersPet, IPet } from '../../services/models-pet';
+import { PetsDataService } from '../../services/pets-data.service';
+
 /**
- * Component list for pets
+ * Component list for pets home
+ * This is a container-smart comp , it manages only the logic-data
+ * It contains the presentation comp for the render  
  */
 @Component({
   selector: 'app-listpets',
@@ -63,7 +65,7 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
  /*********************** */
 
  /**
-  * Load data from this comp. it takes the urlpage and if its first one
+  * Load data from this comp. it takes the urlpage and if it recover state for first time
   * @param urlPage 
   * @param firstLoad 
   */
@@ -88,53 +90,20 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
    * Helpers to check enable status pagination
    * @param action 
    */
-  isEnableAction(action:'first'|'last'|'next'|'prev'):boolean{
-    if(this.hasAll()){return false}
-    switch(action){
-      case 'first':{
-        return !(this.urlFirst===this.urlCurrent);
-      }
-      case 'last':{
-        return !(this.urlLast===this.urlCurrent);
-      }
-      case 'prev':{
-        return !!(this.urlPrev);
-      }
-      case 'next':{
-        return !!(this.urlNext);
-      }
-    }
+  
+  get enableFirst():boolean{
+    return !this.hasAll() && !(this.urlFirst===this.urlCurrent);
   }
-
-  /**
-   * Call sort action ,and sets the bindings
-   * @param sort , type sort
-   */
-  sort(sort:HeadersPet){
-    if(this.currentSort===sort){
-      this.currentSortOrder=this.currentSortOrder==='asc'?'desc':'asc';
-    }else{
-      this.currentSort=sort;
-      this.currentSortOrder='asc';
-    }
+  get enableLast():boolean{
+    return !this.hasAll() && !(this.urlLast===this.urlCurrent);
   }
-
-  /**
-   * Classes for showing the icon sort
-   */
-  get classesSort(){
-    const classes={};
-    if(this.currentSortOrder==='asc'){
-      classes['fa-angle-down']=true;
-      classes['fa-angle-up']=false;
-    }else{
-      classes['fa-angle-up']=true;
-      classes['fa-angle-down']=false;
-    }
-    return classes; 
-    
+  get enablePrev():boolean{
+    return  !this.hasAll() && !!(this.urlPrev);
   }
-
+  get enableNext():boolean{
+    return !this.hasAll() && !!(this.urlNext);
+  }
+  
   /**
    * Navigate to detail, pass the pet model
    * @param pet 
@@ -142,6 +111,16 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
   clickRow(pet:IPet){
     this.router.navigate(['pets/detail'],{state:pet});
   }
+
+  /**
+   * Saves the sort options
+   * @param sort , type sort
+   */
+  sort(sort:{column:HeadersPet,order}){
+    this.currentSort=sort.column;
+    this.currentSortOrder=sort.order;
+  }
+
 
  /**
   * Destroy , saves the order state
