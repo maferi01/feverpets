@@ -4,6 +4,7 @@ import { BaseComponent } from 'src/app/shared/components/base-component';
 
 import { HeadersPet, IPet } from '../../services/models-pet';
 import { PetsDataService } from '../../services/pets-data.service';
+import { ErrorService } from 'src/app/services/error.service';
 
 /**
  * Component list for pets home
@@ -27,8 +28,8 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
   initSort:HeadersPet;
   initSortOrder:'asc'|'desc';
 
-  constructor(private readonly servPets:PetsDataService, private readonly router:Router ) { 
-    super();
+  constructor(private readonly servPets:PetsDataService, private readonly router:Router, errorServ:ErrorService ) { 
+    super(errorServ);
     this.initSortOrder='asc';
   }
 
@@ -82,9 +83,10 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
         this.initSort=this.servPets.currentSort;
         this.initSortOrder=this.servPets.currentSortOrder;
       }
-    });
+    },er=>this.controlError(er));
     this.subs.push(subs);
   }
+  
 
   /**
    * Helpers to check enable status pagination

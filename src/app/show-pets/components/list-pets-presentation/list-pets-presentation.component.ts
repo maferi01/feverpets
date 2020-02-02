@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { IPet, HeadersPet } from '../../services/models-pet';
 import { BaseComponent } from 'src/app/shared/components/base-component';
+import { ErrorService } from 'src/app/services/error.service';
 
 /**
  * Component for only list presentation and events list
@@ -55,7 +56,7 @@ export class ListPetsPresentationComponent extends BaseComponent implements OnIn
   @Output()
   sortEvent= new EventEmitter<{column:HeadersPet,order:'asc'|'desc'}>();
 
-  constructor() {super() }
+  constructor(errorServ:ErrorService) {super(errorServ) }
 
   ngOnInit() {
   }
