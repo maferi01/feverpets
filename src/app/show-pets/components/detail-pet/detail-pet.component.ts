@@ -5,6 +5,7 @@ import { IPet, IPetDetail } from '../../services/models-pet';
 import { IKeyValue } from 'src/app/shared/components/list-key-values/modellistkeys';
 import { PetsDataService } from '../../services/pets-data.service';
 import { BaseComponent } from 'src/app/shared/components/base-component';
+import { ErrorService } from 'src/app/services/error.service';
 /**
  * Detail pet component
  */
@@ -16,8 +17,8 @@ import { BaseComponent } from 'src/app/shared/components/base-component';
 export class DetailPetComponent extends BaseComponent implements OnInit {
   pet:IPetDetail;
   keyValues:IKeyValue[];
-  constructor(public activatedRoute: ActivatedRoute,private readonly servPets:PetsDataService) {
-    super();
+  constructor(public activatedRoute: ActivatedRoute,private readonly servPets:PetsDataService,errorServ:ErrorService) {
+    super(errorServ);
    }
 
    /**
@@ -42,7 +43,7 @@ export class DetailPetComponent extends BaseComponent implements OnInit {
       this.keyValues.push({key:'Healthy',value:dat.healthy});
       
       this.keyValues.push({key:'Description',value:dat.description});
-    });
+    },er=>this.controlError(er));
     this.subs.push(sub);
   }
 

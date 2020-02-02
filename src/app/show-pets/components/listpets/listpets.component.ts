@@ -1,12 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PetsDataService } from '../../services/pets-data.service';
-import { ThrowStmt } from '@angular/compiler';
-import { IPet, HeadersPet } from '../../services/models-pet';
-import { Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BaseComponent } from 'src/app/shared/components/base-component';
+
+import { HeadersPet, IPet } from '../../services/models-pet';
+import { PetsDataService } from '../../services/pets-data.service';
+import { ErrorService } from 'src/app/services/error.service';
+
 /**
- * Component list for pets
+ * Component list for pets home
+ * This is a container-smart comp , it manages only the logic-data
+ * It contains the presentation comp for the render  
  */
 @Component({
   selector: 'app-listpets',
@@ -22,12 +25,12 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
   urlNext: string;
   urlCurrent: string;
   Headers=HeadersPet;
-  currentSort:HeadersPet;
-  currentSortOrder:'asc'|'desc';
+  initSort:HeadersPet;
+  initSortOrder:'asc'|'desc';
 
-  constructor(private readonly servPets:PetsDataService, private readonly router:Router ) { 
-    super();
-    this.currentSortOrder='asc';
+  constructor(private readonly servPets:PetsDataService, private readonly router:Router, errorServ:ErrorService ) { 
+    super(errorServ);
+    this.initSortOrder='asc';
   }
 
   ngOnInit() {
@@ -63,7 +66,7 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
  /*********************** */
 
  /**
-  * Load data from this comp. it takes the urlpage and if its first one
+  * Load data from this comp. it takes the urlpage and if it recover state for first time
   * @param urlPage 
   * @param firstLoad 
   */
@@ -77,64 +80,32 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
       this.urlCurrent= data.urlCurrent;
       //recover sort order
       if(firstLoad && this.servPets.currentSort){
-        this.currentSort=this.servPets.currentSort;
-        this.currentSortOrder=this.servPets.currentSortOrder;
+        this.initSort=this.servPets.currentSort;
+        this.initSortOrder=this.servPets.currentSortOrder;
       }
-    });
+    },er=>this.controlError(er));
     this.subs.push(subs);
   }
+  
 
   /**
    * Helpers to check enable status pagination
    * @param action 
    */
-  isEnableAction(action:'first'|'last'|'next'|'prev'):boolean{
-    if(this.hasAll()){return false}
-    switch(action){
-      case 'first':{
-        return !(this.urlFirst===this.urlCurrent);
-      }
-      case 'last':{
-        return !(this.urlLast===this.urlCurrent);
-      }
-      case 'prev':{
-        return !!(this.urlPrev);
-      }
-      case 'next':{
-        return !!(this.urlNext);
-      }
-    }
+  
+  get enableFirst():boolean{
+    return !this.hasAll() && !(this.urlFirst===this.urlCurrent);
   }
-
-  /**
-   * Call sort action ,and sets the bindings
-   * @param sort , type sort
-   */
-  sort(sort:HeadersPet){
-    if(this.currentSort===sort){
-      this.currentSortOrder=this.currentSortOrder==='asc'?'desc':'asc';
-    }else{
-      this.currentSort=sort;
-      this.currentSortOrder='asc';
-    }
+  get enableLast():boolean{
+    return !this.hasAll() && !(this.urlLast===this.urlCurrent);
   }
-
-  /**
-   * Classes for showing the icon sort
-   */
-  get classesSort(){
-    const classes={};
-    if(this.currentSortOrder==='asc'){
-      classes['fa-angle-down']=true;
-      classes['fa-angle-up']=false;
-    }else{
-      classes['fa-angle-up']=true;
-      classes['fa-angle-down']=false;
-    }
-    return classes; 
-    
+  get enablePrev():boolean{
+    return  !this.hasAll() && !!(this.urlPrev);
   }
-
+  get enableNext():boolean{
+    return !this.hasAll() && !!(this.urlNext);
+  }
+  
   /**
    * Navigate to detail, pass the pet model
    * @param pet 
@@ -143,11 +114,13 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
     this.router.navigate(['pets/detail'],{state:pet});
   }
 
- /**
-  * Destroy , saves the order state
-  */
-  ngOnDestroy(): void {
-    this.servPets.saveOrder(this.currentSort,this.currentSortOrder);
-    super.ngOnDestroy(); 
+  /**
+   * Saves the sort options
+   * @param sort , type sort
+   */
+  sort(sort:{column:HeadersPet,order}){
+    this.servPets.saveOrder(sort.column,sort.order);
   }
+
+ 
 }
