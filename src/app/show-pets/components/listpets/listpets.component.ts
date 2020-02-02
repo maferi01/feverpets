@@ -24,12 +24,12 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
   urlNext: string;
   urlCurrent: string;
   Headers=HeadersPet;
-  currentSort:HeadersPet;
-  currentSortOrder:'asc'|'desc';
+  initSort:HeadersPet;
+  initSortOrder:'asc'|'desc';
 
   constructor(private readonly servPets:PetsDataService, private readonly router:Router ) { 
     super();
-    this.currentSortOrder='asc';
+    this.initSortOrder='asc';
   }
 
   ngOnInit() {
@@ -79,8 +79,8 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
       this.urlCurrent= data.urlCurrent;
       //recover sort order
       if(firstLoad && this.servPets.currentSort){
-        this.currentSort=this.servPets.currentSort;
-        this.currentSortOrder=this.servPets.currentSortOrder;
+        this.initSort=this.servPets.currentSort;
+        this.initSortOrder=this.servPets.currentSortOrder;
       }
     });
     this.subs.push(subs);
@@ -117,16 +117,8 @@ export class ListpetsComponent  extends BaseComponent implements OnInit , OnDest
    * @param sort , type sort
    */
   sort(sort:{column:HeadersPet,order}){
-    this.currentSort=sort.column;
-    this.currentSortOrder=sort.order;
+    this.servPets.saveOrder(sort.column,sort.order);
   }
 
-
- /**
-  * Destroy , saves the order state
-  */
-  ngOnDestroy(): void {
-    this.servPets.saveOrder(this.currentSort,this.currentSortOrder);
-    super.ngOnDestroy(); 
-  }
+ 
 }

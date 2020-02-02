@@ -3,8 +3,8 @@
 *ngIf="listPets"
 [listPets]="listPets"
 
-[currentSort]="currentSort"
-[currentSortOrder]="currentSortOrder"
+[currentSort]="initSort"
+[currentSortOrder]="initSortOrder"
 (sortEvent)="sort($event)"
 
 [enableFirst]="enableFirst"
